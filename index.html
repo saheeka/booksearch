@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/8d427ea75b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    img{
+        height: 150px;
+        width: 120px;
+        
+    }
+    body{
+        background: url(book.jpg);
+        background-position:  center;
+background-attachment: fixed;
+background-size: cover;
+    }
+    @media screen and (max-width: 768px){
+            h1{
+        font-size:25px;
+        margin-left: 30px;
+
+    }
+    .card{
+margin-left: 15px;
+margin-top: 10px;
+    }
+}
+ul.nav li
+{
+  
+ font-size: 17px;
+  background-color:#0d6b5a;
+  border: 0ch;
+  
+}
+    
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-sm-12"></div>
+            <div class="col-lg-4 col-sm-12 " style="margin-left:45px">
+              <h1 style="font-family: monotype corsiva; ">BOOK SEARCH</h1>
+                <input type="text" id="place">
+                <button class="btn btn-warning" onclick="findBook()">Search</button>
+                </div>
+            <div class="col-4 col-sm-12"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4 col-sm-12 col-m-12" id="result"></div>
+            <div class="col-4"></div>
+           
+        </div>
+    </div>
+</body>
+<script>
+    function findBook(data){
+        bname=place.value;
+        
+
+        
+        let url=`https://www.googleapis.com/books/v1/volumes?q=${bname}`
+        fetch(url).then(res=>res.json()).then(data=>{
+            console.log(data);
+            let html_data="";
+            if(place.value=="")
+            {
+                alert("Enter the name of the book")
+            }else{
+            for(let i=0; i<data.items.length;i++)
+            {
+
+                 html_data+=`<div class="card p-4" style=" margin-left:20px; margin-top:20px;
+                 width: 20rem; align-items:center; background-color:#0d6b5a;">
+  <img src="${data.items[i].volumeInfo.imageLinks.thumbnail}"  alt="...">
+  <div class="card-body" >
+    <h3 class="card-title" style="font-family:monotype corsiva; color:#9aa317;">  ${data.items[i].volumeInfo.title}</h5>
+   
+  </div>
+  <ul class="nav " >
+    <li class="list-group-item" style="font-family:monotype corsiva;">Publisher : ${data.items[i].volumeInfo.publisher}</li>
+    <li class="list-group-item"style=" font-family:monotype corsiva; ">Published Date : ${data.items[i].volumeInfo.publishedDate}</li>
+    <li class="list-group-item" style="font-family:monotype corsiva;">Category : ${data.items[i].volumeInfo.categories}</li>
+  </ul>
+  
+</div>`
+ result.innerHTML=html_data;
+            }}
+            
+        }) 
+           }
+</script>
+</html>
